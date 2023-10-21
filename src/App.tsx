@@ -18,7 +18,7 @@ function App() {
   const {main, modal} = useAppSelector(state => state.main)
   return (
     <div className="App ">
-      
+        
         <Link/>
     </div>
   );

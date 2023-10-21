@@ -2,7 +2,7 @@ import React, { ChangeEvent, useState } from 'react'
 import { Link } from "react-router-dom"
 import { FaArrowLeft, FaCheck } from "react-icons/fa"
 import { useAppDispatch, useAppSelector } from '../../hooks/Hooks'
-import {  closeModal } from '../../mainSlice/MainSlice'
+import {  addModal } from '../../mainSlice/MainSlice'
 
 
 interface IState {
@@ -12,7 +12,7 @@ interface IState {
     weight: number,
     height: number,
     date: string,
-    image: string
+    image?: string | any 
 }
 export const Modal = () => {
     const {mainIn } = useAppSelector(state => state.main)
@@ -23,7 +23,7 @@ export const Modal = () => {
         weight: mainIn.weight,
         height: mainIn.height ,
         date: mainIn.date,
-        image: mainIn.image
+        image : mainIn.image
     })
     const dispatch = useAppDispatch()
 
@@ -37,8 +37,8 @@ export const Modal = () => {
     const person = () => {
         let d = new Date().toUTCString();
         const date: string = `${d}`
-        const newState = { ...state, date }
-        dispatch(closeModal(newState))
+        const newState = { ...state, date}
+        dispatch(addModal(newState))
         cetState({ ...state, name: "", job: "", weight: 0, height: 0 })
     }
     return (

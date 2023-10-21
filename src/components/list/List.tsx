@@ -1,6 +1,6 @@
-import React from 'react'
+import React, {ChangeEvent, useState}from 'react'
 import { useAppDispatch, useAppSelector } from '../../hooks/Hooks'
-import { changePerson, closeModal, deletePerson } from '../../mainSlice/MainSlice'
+import { changePerson, deletePerson } from '../../mainSlice/MainSlice'
 export const List = () => {
     const { main } = useAppSelector(state => state.main)
     const dispatch = useAppDispatch()
@@ -23,10 +23,10 @@ export const List = () => {
                 {
                     main.map(items => {
                         return <>
-                            <div className=" flex items-center  py-8 ">
+                            <div className=" flex items-center  py-4 ">
 
                                 <div className=" ml-6 ">
-                                    <img className="w-8 h-8 rounded-full" src={items.image} alt="Neil image" />
+                                    <img className="w-8 h-8 rounded-full"  src={items.image}  alt="Neil image" />
                                 </div>
                                 <div className='flex items-center justify-between pl-[25px] pr-[30px] w-full '>
                                     <div className="  w-[46%] flex items-center ">

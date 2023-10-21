@@ -1,21 +1,26 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-interface state {
+interface state  {
     id: number,
     name: string,
     job: string,
     weight: number,
     height: number,
     date: string,
-    image: string
+    
+        image?: string | any 
+    
+    
 }
 interface Main {
     main: state[],
     modal : boolean,
     mainIn: any
 }
+
+const local  =  JSON.parse(localStorage.getItem("items") as string) ?? [];
 const initialState :Main = {
-    main : [],
+    main : local,
     modal : false,
     mainIn: {}
 }
@@ -28,18 +33,27 @@ export const mainSlice = createSlice({
             const id = action.payload.id + state.main.length 
             const newc = {...action.payload,  id}
             state.main.push(newc)
+            localStorage.setItem("items", JSON.stringify(state.main))
         }, 
         deletePerson: (state, action: PayloadAction<number>) => { 
-            state.main = state.main.filter((items) => items.id !== action.payload)
+            const newState = state.main = state.main.filter((items) => items.id !== action.payload)
+            localStorage.setItem("items", JSON.stringify(newState))
     },
     changePerson: (state, action:PayloadAction<state> ) => {
         state.modal = true
         state.mainIn = state.mainIn = action.payload
+        
     }, 
-    closeModal:  (state, action:PayloadAction<state>) => {
+    addModal:  (state, action:PayloadAction<state>) => {
         state.modal = false
         const newId = action.payload.id
         state.main = state.main.map((items) => items.id === newId ? action.payload: items)
+        const newState = state.main
+        localStorage.setItem("items", JSON.stringify(newState))
+    },
+    searchPeron: (state, action:PayloadAction<string>) => {
+       console.log(action.payload)
+       state.main = action.payload === "" ? state.main : state.main.filter(items => items.name === action.payload)
     }
     }
 }
@@ -47,4 +61,4 @@ export const mainSlice = createSlice({
 
 
 export default mainSlice.reducer;
-export const { addPerson, changePerson, closeModal, deletePerson} = mainSlice.actions;
+export const { addPerson, changePerson, addModal, deletePerson, searchPeron} = mainSlice.actions;

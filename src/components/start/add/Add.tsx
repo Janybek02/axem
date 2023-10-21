@@ -10,8 +10,9 @@ interface IState {
     weight: number,
     height: number,
     date: string,
-    image: string
+    image ? : string | any
 }
+
 
 export const Add = () => {
     const [state, cetState] = useState<IState>({
@@ -21,22 +22,32 @@ export const Add = () => {
         weight: 0,
         height: 0,
         date: "",
-        image: ""
+       image : undefined
     })
+    const [file , cetFile] = useState<ArrayBuffer | string | null >("") 
     const dispatch = useAppDispatch()
 
-
+    const fileReader = new FileReader()
+        fileReader.onloadend = () => {
+        cetFile(fileReader.result)
+        
+    }
+    
     const onChange = (e: ChangeEvent<HTMLInputElement>) => {
+
         cetState({ ...state, [e.target.name]: e.target.value })
-
-
+    }
+    const fileChange = (e: ChangeEvent<any>) => {
+        fileReader.readAsDataURL( e.target.files[0])
+        
     }
 
     const person = () => {
         let d = new Date().toUTCString();
+        state.image  = file
         const date: string = `${d}`
-        const newState = { ...state, date }
-        dispatch(addPerson(newState))
+        const newState = { ...state, date, }
+        dispatch(addPerson(newState ))
         cetState({ ...state, name: "", job: "", weight: 0, height: 0 })
     }
     return (
@@ -45,10 +56,10 @@ export const Add = () => {
                 <Link to={"/"}><FaArrowLeft className=' text-[25px]' /></Link>
                 <p className=' ml-5 text-[30px]  font-bold  text-blck '>Добавить нового пользователя</p>
             </div>
-            <div className=' flex items-end  justify-between '>
+            <div className=' flex items-center w-full   flex-wrap-reverse  justify-between '>
                 <div className=' w-[50%] max-[1131px]:w-[450px] '>
                     <div className=' '>
-                        <div className=' flex mb-3 items-center justify-between'>
+                        <div className=' flex mb-3  items-center justify-between'>
                             <p className=' text-slate-400'>
                                 ФИО*
                             </p>
@@ -97,11 +108,9 @@ export const Add = () => {
                         <FaCheck className='ml-[15px] tex-[30px] text-white' />
                     </button>
                 </div>
-                <div className=' w-[30%]   bg-slate-100 h-80'>
+                <div className="w-[30%] max-[1000px]:w-[250px]  bg-slate-100 h-80 ">
                     <input
-                        name='image'
-                        value={state.image}
-                        onChange={onChange}
+                        onChange={fileChange}
                         accept=".jpg, .jpeg, .png"
                         multiple
                         type='file' />
