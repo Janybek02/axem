@@ -3,6 +3,7 @@ import { Link } from "react-router-dom"
 import { FaArrowLeft, FaCheck } from "react-icons/fa"
 import { useAppDispatch } from '../../../hooks/Hooks'
 import { addPerson } from '../../../mainSlice/MainSlice'
+import { url } from 'inspector'
 interface IState {
     id: number
     name: string,
@@ -10,7 +11,7 @@ interface IState {
     weight: number,
     height: number,
     date: string,
-    image ? : string | any
+    image?: string | any
 }
 
 
@@ -22,32 +23,32 @@ export const Add = () => {
         weight: 0,
         height: 0,
         date: "",
-       image : undefined
+        image: undefined
     })
-    const [file , cetFile] = useState<ArrayBuffer | string | null >("") 
+    const [file, cetFile] = useState<ArrayBuffer | string | null>("")
     const dispatch = useAppDispatch()
 
     const fileReader = new FileReader()
-        fileReader.onloadend = () => {
+    fileReader.onloadend = () => {
         cetFile(fileReader.result)
-        
+
     }
-    
+
     const onChange = (e: ChangeEvent<HTMLInputElement>) => {
 
         cetState({ ...state, [e.target.name]: e.target.value })
     }
     const fileChange = (e: ChangeEvent<any>) => {
-        fileReader.readAsDataURL( e.target.files[0])
-        
+        fileReader.readAsDataURL(e.target.files[0])
+
     }
 
     const person = () => {
         let d = new Date().toUTCString();
-        state.image  = file
+        state.image = file
         const date: string = `${d}`
         const newState = { ...state, date, }
-        dispatch(addPerson(newState ))
+        dispatch(addPerson(newState))
         cetState({ ...state, name: "", job: "", weight: 0, height: 0 })
     }
     return (
@@ -101,14 +102,18 @@ export const Add = () => {
                                 type="text" id="first_name" className="w-[370px] bg-slate-100 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block p-2.5 " placeholder="1.80" required />
                         </div>
                     </div>
-                    <button
-                        onClick={person}
-                        className=' mt-[50px] flex items-center justify-center  w-full h-[56px] bg-[#3366FF]  '>
-                        <p className=' font-bold text-[20px] text-white'> Добавить </p>
-                        <FaCheck className='ml-[15px] tex-[30px] text-white' />
-                    </button>
+                    <Link to={"/"}>
+                        <button
+                            onClick={person}
+                            className=' mt-[50px] flex items-center justify-center  w-full h-[56px] bg-[#3366FF]  '>
+                            <p className=' font-bold text-[20px] text-white'> Добавить </p>
+                            <FaCheck className='ml-[15px] tex-[30px] text-white' />
+                        </button>
+                    </Link>
                 </div>
-                <div className="w-[30%] max-[1000px]:w-[250px]  bg-slate-100 h-80 ">
+                <div
+                    style={{background: `url("${file}")`}}
+                className="w-[30%] max-[1000px]:w-[250px]  bg-slate-100 h-80 ">
                     <input
                         onChange={fileChange}
                         accept=".jpg, .jpeg, .png"
