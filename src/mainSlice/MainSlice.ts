@@ -53,7 +53,7 @@ export const mainSlice = createSlice({
     },
     searchPeron: (state, action:PayloadAction<string>) => {
        console.log(action.payload)
-       state.main = action.payload === "" ? state.main : state.main.filter(items => items.name === action.payload)
+        state.main = state.main.filter(items => action.payload ===  "" ? items : items.name.toLowerCase().includes(action.payload))
     }
     }
 }

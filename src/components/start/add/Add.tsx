@@ -40,9 +40,8 @@ export const Add = () => {
     }
     const fileChange = (e: ChangeEvent<any>) => {
         fileReader.readAsDataURL(e.target.files[0])
-
     }
-
+    const bg = file ? `url("${file}")` : " rgb(241 245 249 / var(--tw-bg-opacity))"
     const person = () => {
         let d = new Date().toUTCString();
         state.image = file
@@ -112,13 +111,16 @@ export const Add = () => {
                     </Link>
                 </div>
                 <div
-                    style={{background: `url("${file}")`}}
-                className="w-[30%] max-[1000px]:w-[250px]  bg-slate-100 h-80 ">
-                    <input
+                    style={ {  background: bg} }
+                className="w-[30%] max-[1000px]:w-[250px] shadow-lg shadow-slate-600 bg-slate-100 h-80 ">
+                    {
+                        file ?  "" : <input
                         onChange={fileChange}
                         accept=".jpg, .jpeg, .png"
                         multiple
                         type='file' />
+                    }
+                   
                 </div>
             </div>
         </div>

@@ -1,17 +1,17 @@
-import React, {useState, ChangeEvent} from 'react'
+import React, {useState, ChangeEvent, useEffect} from 'react'
 import { searchPeron } from '../../mainSlice/MainSlice'
 import {Link} from "react-router-dom"
 import { useAppSelector, useAppDispatch } from '../../hooks/Hooks'
 
 export const Start = () => {
-    const [search, cetSearch ] = useState("")
+    const [search, cetSearch ] = useState<string>("")
     const dispatch = useAppDispatch()
     const {main} = useAppSelector(state => state.main)
     const handleSearch = (e : ChangeEvent<HTMLInputElement>) => {
         cetSearch( e.target.value )
+        dispatch(searchPeron(search))
     }
     return (
-
         <div className=' w-[80%] max-[1000px]:w-[95%] bg-white  h-[200px]'>
             <div className='flex mb-28 items-center justify-between '>
                 <p className=' text-[20px] text-black'>Motion</p>
@@ -32,7 +32,7 @@ export const Start = () => {
                                 onChange={handleSearch}
                             type="search" id="default-search" className="block w-full p-2 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 " placeholder="Search Mockups, Logos..." required />
                             <button 
-                                onClick={() => dispatch(searchPeron(search))}
+                                
                             type="submit" className="text-white absolute right-0 bottom-0 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 ">Найти</button>
                         </div>
                         <Link  to={"/add"}>
