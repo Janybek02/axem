@@ -31,11 +31,8 @@ export const Add = () => {
     const fileReader = new FileReader()
     fileReader.onloadend = () => {
         cetFile(fileReader.result)
-
     }
-
     const onChange = (e: ChangeEvent<HTMLInputElement>) => {
-
         cetState({ ...state, [e.target.name]: e.target.value })
     }
     const fileChange = (e: ChangeEvent<any>) => {
@@ -111,7 +108,7 @@ export const Add = () => {
                     </Link>
                 </div>
                 <div
-                    style={ {  background: bg} }
+                    style={ {  background: bg , backgroundRepeat: 'no-repeat', backgroundPosition: 'center center', backgroundAttachment: 'fixed', backgroundSize: 'cover'}}
                 className="w-[30%] max-[1000px]:w-[250px] shadow-lg shadow-slate-600 bg-slate-100 h-80 ">
                     {
                         file ?  "" : <input

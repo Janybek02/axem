@@ -7,10 +7,7 @@ interface state  {
     weight: number,
     height: number,
     date: string,
-    
-        image?: string | any 
-    
-    
+    image?: string | any  
 }
 interface Main {
     main: state[],
